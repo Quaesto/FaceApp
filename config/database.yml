@@ -1,0 +1,23 @@
+default: &default
+  adapter: postgresql
+  encoding: unicode
+  username: <%= Rails.application.credentials.dig(:database, :username) %>
+  password: <%= Rails.application.credentials.dig(:database, :password) %>
+  pool: <%= ENV.fetch("RAILS_MAX_THREADS") { 5 } %>
+
+development:
+  <<: *default
+  database: FaceApp_development
+  port: 5432
+
+
+test:
+  <<: *default
+  database: FaceApp_test
+
+
+production:
+  <<: *default
+  database: FaceApp_production
+  password: <%= ENV['BBOOKING_DATABASE_PASSWORD'] %>
+  url: <%= ENV['DATABASE_URL'] %>
